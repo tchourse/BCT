@@ -1,0 +1,45 @@
+/1.TAKE ENVIRONMENT AS CANCUM
+/2.Create file in contract named Student.sol
+/3. copy paste code
+/4.ESTIMATED GAS
+
+// SPDX-License-Identifier: MIT
+pragma solidity  ^0.8.0;
+
+contract Studentdata {
+    struct Student {
+        string name;
+        uint256 rollno;
+    }
+
+    // Fixed syntax error and declared 'studentarr' correctly
+    Student[] public studentarr;
+
+    // Corrected 'unit' to 'uint256'
+    function addStudent(string memory name, uint256 rollno) public {
+        for (uint i = 0; i < studentarr.length; i++) {
+            if (studentarr[i].rollno == rollno) {
+                revert("Student with this rollno already exists");
+            }
+        }
+        studentarr.push(Student(name, rollno));
+    }
+
+    // Corrected 'unit' to 'uint256'
+    function getStudentsLength() public view returns (uint256) {
+        return studentarr.length;
+    }
+
+    function displayAllStudents() public view returns (Student[] memory) {
+        return studentarr;
+    }
+
+    // Removed duplicate function 'getStudentsLength'
+    function getStudentByIndex(uint256 idx) public view returns (Student memory) {
+        require(idx < studentarr.length, "index out of bound!");
+        return studentarr[idx];
+    }
+
+    fallback() external payable {}
+    receive() external payable {}
+}
